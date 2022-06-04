@@ -109,9 +109,9 @@ public class ClientController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
 	}
 	
-	//Reception interface
+	// Reception interface
 	@GetMapping("/reception/{id}")
-	public ResponseEntity<?> Reception(@PathVariable("id") Long id){
+	public ResponseEntity<?> Reception(@PathVariable("id") String id){
 		return ResponseEntity.ok()
 				.body(orderRepository.findAllClientOrders(id));
 	}
