@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Lob;
 
 @Entity
 public class Client {
@@ -18,6 +19,8 @@ public class Client {
 	private String first_name;
 	private String last_name;
 	private int age;
+	@Lob
+	byte[] image;
 	
 	@OneToMany(mappedBy="client")
 	private List<Orders> orders = new ArrayList<Orders>();
@@ -65,6 +68,14 @@ public class Client {
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	public byte[] getImage() {
+		return image;
+	}
+
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 	
