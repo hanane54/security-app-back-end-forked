@@ -64,7 +64,7 @@ public class ClientController {
 	
 	@PostMapping
 	@ResponseBody
-	public ResponseEntity<HttpStatus> addClient(@RequestBody Client client) {
+	public ResponseEntity<HttpStatus> addClient(Client client, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 		Client newClient=new Client();
 		if(client.getFirst_name()!=null) {
 			newClient.setFirst_name(client.getFirst_name());
@@ -75,8 +75,18 @@ public class ClientController {
 		if(client.getAge()>0) {
 			newClient.setAge(client.getAge());
 		}
-		
-		clientRepository.saveAndFlush(newClient);
+		String fileName = multipartFile.getOriginalFilename();
+		String fe = "";
+		if (fileName.contains(".")) {
+			int i = fileName.lastIndexOf('.');
+			fe = i > 0 ? fileName.substring(i + 1) : "";
+		}
+		if(fe.contains("png") ||fe.contains("PNG")|| fe.contains("jpg")) {
+			
+			newClient.setImage(multipartFile.getBytes());
+			clientRepository.saveAndFlush(newClient);
+			
+		}
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 	
